@@ -1,0 +1,23 @@
+name: CI/CD
+
+on:
+  - push
+
+jobs:
+  job1:
+    strategy:
+      matrix:
+        image:
+          - name: image1
+          - name: image2
+    runs-on: ubuntu-18.04
+    steps:
+      - run: echo hello
+    outputs:
+      image-name: ${{ matrix.image.name }}
+
+  job2:
+    runs-on: ubuntu-18.04
+    needs: job1
+    steps:
+      - run: echo image-name=${{ needs.job1.image-name }}
