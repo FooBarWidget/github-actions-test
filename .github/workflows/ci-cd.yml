@@ -29,5 +29,7 @@ jobs:
       - job1
       - job2
     steps:
-      - run: echo job1-image-name=${{ toJSON(needs.job1.outputs) }}
+      - run: echo job1-image-name="$DATA"
+        env:
+          DATA: ${{ toJSON(needs.job1.outputs) }}
       - run: echo job2-image-name=${{ needs.job2.outputs.image-name }}
