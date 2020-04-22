@@ -29,5 +29,5 @@ jobs:
       - job1
       - job2
     steps:
-      - run: echo job1-image-name=${{ needs.job1.image-name }}
-      - run: echo job2-image-name=${{ needs.job2.image-name }}
+      - run: echo job1-image-name=${{ needs.job1.outputs.image-name }}
+      - run: echo job2-image-name=${{ needs.job2.outputs.image-name }}
