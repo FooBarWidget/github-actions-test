@@ -12,4 +12,4 @@ jobs:
         with:
           name: foo
         continue-on-error: true
-      - run: echo ${{ toJSON(steps.dl) }}
+      - run: echo ${{ toJSON(steps) }}
