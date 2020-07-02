@@ -7,7 +7,9 @@ jobs:
   job1:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/download-artifact@v2
+      - name: dl
+        uses: actions/download-artifact@v2
         with:
           name: foo
-      - run: ls -l
+        continue-on-error: true
+      - run: echo ${{ toJSON(steps.dl) }}
