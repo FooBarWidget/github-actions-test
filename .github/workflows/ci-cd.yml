@@ -14,6 +14,6 @@ jobs:
         continue-on-error: true
       - id: foo
         run: echo "::set-output name=action_fruit::strawberry"
-      - run: echo ${{ toJSON(steps) }}
-      - run: echo ${{ toJSON(steps.foo) }}
-      - run: echo ${{ toJSON(steps.foo.outputs) }}
+      - run: echo '${{ toJSON(steps) }}'
+      - run: echo '${{ toJSON(steps.foo) }}'
+      - run: echo '${{ toJSON(steps.foo.outputs) }}'
