@@ -7,12 +7,13 @@ jobs:
   job1:
     runs-on: ubuntu-18.04
     steps:
-      - name: dl
+      - id: dl
         uses: actions/download-artifact@v2
         with:
           name: foo
         continue-on-error: true
-      - name: foo
+      - id: foo
         run: echo "::set-output name=action_fruit::strawberry"
+      - run: echo ${{ toJSON(steps) }}
       - run: echo ${{ toJSON(steps.foo) }}
       - run: echo ${{ toJSON(steps.foo.outputs) }}
