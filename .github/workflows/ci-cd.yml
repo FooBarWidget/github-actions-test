@@ -9,6 +9,7 @@ jobs:
     #if: 'false'
     steps:
       - run: echo hello && sleep 10
+      - run: false
 
   job2:
     runs-on: ubuntu-18.04
