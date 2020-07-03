@@ -8,7 +8,17 @@ jobs:
     runs-on: ubuntu-18.04
     #if: 'false'
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: artifact
+        continue-on-error: true
       - run: echo hello && sleep 10
+      - run: touch hello.txt
+      - name: Archive artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: artifact
+          path: .
       - run: false
 
   job2:
