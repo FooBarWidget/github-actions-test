@@ -8,8 +8,8 @@ runs:
     - run: echo "Nice to meet you!"
       shell: pwsh
     - shell: bash
-        run: |
-          expr 3 + 7 > math-homework.txt
+      run: |
+        expr 3 + 7 > math-homework.txt
     - name: Upload math result for job 1
       uses: actions/upload-artifact@v2
       with:
