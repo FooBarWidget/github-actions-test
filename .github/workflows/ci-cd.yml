@@ -7,37 +7,5 @@ jobs:
   job1:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: artifact
-        continue-on-error: true
-      - run: touch hello.txt
-      - name: Archive artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: artifact
-          path: .
-
-  job2:
-    runs-on: ubuntu-18.04
-    needs: job1
-    steps:
-      - run: echo hello && sleep 10
-      - run: false
-
-  job3:
-    runs-on: ubuntu-18.04
-    needs: job2
-    # Run even if job1 has been skipped
-    if: '!failure() && !cancelled()'
-    steps:
-      - id: dl
-        uses: actions/download-artifact@v2
-        with:
-          name: foo
-        continue-on-error: true
-      - id: foo
-        run: echo "::set-output name=action_fruit::strawberry"
-      - run: echo '${{ toJSON(steps) }}'
-      - run: echo '${{ toJSON(steps.foo) }}'
-      - run: echo '${{ toJSON(steps.foo.outputs) }}'
+      - uses: actions/checkout@v2
+      - uses: actions/test-composite
