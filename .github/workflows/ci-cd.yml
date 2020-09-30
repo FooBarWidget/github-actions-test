@@ -14,3 +14,4 @@ jobs:
       - run: echo hello world
       - run: echo CI_NUM=${{ env.CI_NUM }}
       - run: echo CI_NUM="$CI_NUM"
+      - run: echo "::warning file=app.js,line=1,col=5::Missing semicolon"
