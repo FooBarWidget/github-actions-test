@@ -13,13 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test no clear
-        uses: ./github/actions/test
+        uses: ./.github/actions/test
       - name: test clear=true (boolean)
-        uses: ./github/actions/test
+        uses: ./.github/actions/test
         with:
           clear: true
       - name: test clear=true (string)
-        uses: ./github/actions/test
+        uses: ./.github/actions/test
         with:
           clear: 'true'
       - name: expect foo
