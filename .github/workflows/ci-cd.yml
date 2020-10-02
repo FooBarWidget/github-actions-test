@@ -11,7 +11,13 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: echo hello world
-      - run: echo CI_NUM=${{ env.CI_NUM }}
-      - run: echo CI_NUM="$CI_NUM"
-      - run: echo "::warning ::Missing semicolon"
+      - name: test no clear
+        uses: ./github/actions/test
+      - name: test clear=true (boolean)
+        uses: ./github/actions/test
+        with:
+          clear: true
+      - name: test clear=true (string)
+        uses: ./github/actions/test
+        with:
+          clear: 'true'

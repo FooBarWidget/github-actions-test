@@ -1,0 +1,16 @@
+name: Test
+description: Test
+inputs:
+  clear:
+    description: Clear destination directory
+    required: false
+runs:
+  using: composite
+  steps:
+    - run: |
+        if ${{ inputs.clear == 'true' }}; then
+          echo 'clear = true'
+        else
+          echo 'clear = false'
+        fi
+      shell: bash
