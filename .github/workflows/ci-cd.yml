@@ -5,6 +5,7 @@ on:
 
 env:
   CI_NUM: ${{ github.run_number }}
+  MY_ENV1: foo
 
 jobs:
   job1:
@@ -21,3 +22,7 @@ jobs:
         uses: ./github/actions/test
         with:
           clear: 'true'
+      - name: expect foo
+        run: echo ${{ env.MY_ENV1 || github.run_number }}
+      - name: expect run_number
+        run: echo ${{ env.MY_ENV2 || github.run_number }}
