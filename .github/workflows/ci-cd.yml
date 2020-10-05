@@ -6,17 +6,23 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-20.04
-    # outputs:
-    #   json: ${{ steps.test.outputs.matrix }}
+    outputs:
+      json: ${{ steps.test.outputs.matrix }}
+      test2: ${{ steps.test2.outputs.matrix }}
+      test3: ${{ steps.test3.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - name: test no clear
         id: test
         #run: echo '::set-output name=matrix::{"foo":"bar","bool1":true,"bool2":false}'
         run: |
-          ruby -e 'str = " " * (1024 * 1024); puts "::set-output name=matrix::#{str}"'
-      - run: |
-          ruby -e 'str = " " * (1024); puts "::set-output name=matrix::#{str}"'
+          ruby -e 'str = " " * (512 * 1024); puts "::set-output name=matrix::#{str}"'
+      - id: test2
+        run: |
+          ruby -e 'str = " " * (512 * 1024); puts "::set-output name=matrix::#{str}"'
+      - id: test3
+        run: |
+          ruby -e 'str = " " * (512 * 1024); puts "::set-output name=matrix::#{str}"'
   
   # job2:
   #   runs-on: ubuntu-20.04
