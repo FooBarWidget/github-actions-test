@@ -6,8 +6,8 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-20.04
-    outputs:
-      json: ${{ steps.test.outputs.matrix }}
+    # outputs:
+    #   json: ${{ steps.test.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - name: test no clear
@@ -16,14 +16,14 @@ jobs:
         run: |
           ruby -e 'str = " " * (1024 * 1024); puts "::set-output name=matrix::#{str}"'
   
-  job2:
-    runs-on: ubuntu-20.04
-    needs: job1
-    #if: contains(needs.job1.outputs.json, 'A')
-    steps:
-      - run: ruby -e 'p ENV["DATA"].size'
-        env:
-          DATA: ${{ needs.job1.outputs.json }}
+  # job2:
+  #   runs-on: ubuntu-20.04
+  #   needs: job1
+  #   #if: contains(needs.job1.outputs.json, 'A')
+  #   steps:
+  #     - run: ruby -e 'p ENV["DATA"].size'
+  #       env:
+  #         DATA: ${{ needs.job1.outputs.json }}
 
   # job3:
   #   runs-on: ubuntu-20.04
