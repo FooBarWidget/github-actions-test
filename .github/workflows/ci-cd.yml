@@ -12,12 +12,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: test no clear
         id: test
-        run: echo '::set-output name=matrix::{"foo":"bar","bool1":true,"bool2":false}'
+        #run: echo '::set-output name=matrix::{"foo":"bar","bool1":true,"bool2":false}'
+        run: echo '::set-output name=matrix::;A;C;'
 
   job2:
     runs-on: ubuntu-20.04
     needs: job1
-    #if: fromJSON(needs.job1.outputs.json).bool1
+    if: contains(needs.job1.outputs.json, 'A')
     steps:
       - run: echo "$DATA"
         env:
@@ -26,7 +27,7 @@ jobs:
   job3:
     runs-on: ubuntu-20.04
     needs: job1
-    if: fromJSON(needs.job1.outputs.json).bool2
+    if: contains(needs.job1.outputs.json, 'B')
     steps:
       - run: echo "$DATA"
         env:
