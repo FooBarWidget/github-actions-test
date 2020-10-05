@@ -3,26 +3,27 @@ name: CI/CD
 on:
   - push
 
-env:
-  CI_NUM: ${{ github.run_number }}
-  MY_ENV1: foo
-
 jobs:
   job1:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
+    outputs:
+      test: ${{ steps.id.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - name: test no clear
-        uses: ./.github/actions/test
-      - name: test clear=true (boolean)
-        uses: ./.github/actions/test
-        with:
-          clear: true
-      - name: test clear=true (string)
-        uses: ./.github/actions/test
-        with:
-          clear: 'true'
-      - name: expect foo
-        run: echo ${{ env.MY_ENV1 || github.run_number }}
-      - name: expect run_number
-        run: echo ${{ env.MY_ENV2 || github.run_number }}
+        id: test
+        run: echo '::set-output name=matrix::{"foo":"bar","bool1":true,"bool2":false}'
+
+  job2:
+    runs-on: ubuntu-20.04
+    needs: job1
+    if: ${{ fromJSON(needs.job1.test).bool1 }}
+    steps:
+      - run: echo done
+
+  job3:
+    runs-on: ubuntu-20.04
+    needs: job1
+    if: ${{ fromJSON(needs.job1.test).bool2 }}
+    steps:
+      - run: echo done
