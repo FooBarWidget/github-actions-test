@@ -13,22 +13,24 @@ jobs:
       - name: test no clear
         id: test
         #run: echo '::set-output name=matrix::{"foo":"bar","bool1":true,"bool2":false}'
-        run: echo '::set-output name=matrix::;A;C;'
+        run: |
+          ruby -e 'str = " " * (1024 * 1024); puts "::set-output name=matrix::#{str}"'
+        TODO: test variable size limit
 
   job2:
     runs-on: ubuntu-20.04
     needs: job1
-    if: contains(needs.job1.outputs.json, 'A')
+    #if: contains(needs.job1.outputs.json, 'A')
     steps:
-      - run: echo "$DATA"
+      - run: ruby -e 'p ENV["DATA"].size'
         env:
           DATA: ${{ needs.job1.outputs.json }}
 
-  job3:
-    runs-on: ubuntu-20.04
-    needs: job1
-    if: contains(needs.job1.outputs.json, 'B')
-    steps:
-      - run: echo "$DATA"
-        env:
-          DATA: ${{ needs.job1.outputs.json }}
+  # job3:
+  #   runs-on: ubuntu-20.04
+  #   needs: job1
+  #   if: contains(needs.job1.outputs.json, 'B')
+  #   steps:
+  #     - run: echo "$DATA"
+  #       env:
+  #         DATA: ${{ needs.job1.outputs.json }}
