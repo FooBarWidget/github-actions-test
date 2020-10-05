@@ -17,13 +17,17 @@ jobs:
   job2:
     runs-on: ubuntu-20.04
     needs: job1
-    #if: fromJSON(needs.job1.outputs.test).bool1
+    #if: fromJSON(needs.job1.outputs.json).bool1
     steps:
-      - run: echo '${{ needs.job1.outputs.test }}'
+      - run: echo "$DATA"
+        env:
+          DATA: ${{ needs.job1.outputs.json }}
 
   job3:
     runs-on: ubuntu-20.04
     needs: job1
-    if: fromJSON(needs.job1.outputs.test).bool2
+    if: fromJSON(needs.job1.outputs.json).bool2
     steps:
-      - run: echo '${{ needs.job1.outputs.test }}'
+      - run: echo "$DATA"
+        env:
+          DATA: ${{ needs.job1.outputs.json }}
