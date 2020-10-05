@@ -7,7 +7,7 @@ jobs:
   job1:
     runs-on: ubuntu-20.04
     outputs:
-      test: ${{ steps.id.outputs.matrix }}
+      test: ${{ steps.test.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - name: test no clear
