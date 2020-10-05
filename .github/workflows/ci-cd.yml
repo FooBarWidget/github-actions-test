@@ -17,13 +17,13 @@ jobs:
   job2:
     runs-on: ubuntu-20.04
     needs: job1
-    if: fromJSON(needs.job1.test).bool1
+    if: fromJSON(needs.job1.outputs.test).bool1
     steps:
       - run: echo done
 
   job3:
     runs-on: ubuntu-20.04
     needs: job1
-    if: fromJSON(needs.job1.test).bool2
+    if: fromJSON(needs.job1.outputs.test).bool2
     steps:
       - run: echo done
