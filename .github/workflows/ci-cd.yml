@@ -7,7 +7,7 @@ jobs:
   job1:
     runs-on: ubuntu-20.04
     outputs:
-      test: ${{ steps.test.outputs.matrix }}
+      json: ${{ steps.test.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - name: test no clear
@@ -17,13 +17,13 @@ jobs:
   job2:
     runs-on: ubuntu-20.04
     needs: job1
-    if: fromJSON(needs.job1.outputs.test).bool1
+    #if: fromJSON(needs.job1.outputs.test).bool1
     steps:
-      - run: echo done
+      - run: echo '${{ needs.job1.outputs.test }}'
 
   job3:
     runs-on: ubuntu-20.04
     needs: job1
     if: fromJSON(needs.job1.outputs.test).bool2
     steps:
-      - run: echo done
+      - run: echo '${{ needs.job1.outputs.test }}'
