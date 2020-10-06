@@ -15,7 +15,6 @@ jobs:
     needs:
       - commit_published_packages_test
     if: |
-      true
-      && !failure() && !cancelled()
+      true && !failure() && !cancelled()
     steps:
       - run: 'false'
