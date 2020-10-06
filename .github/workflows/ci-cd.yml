@@ -1,4 +1,6 @@
-# A job is skipped if at least one dependency is skipped.
+# A job is skipped if:
+# - At least one dependency is skipped
+# - A dependency has failed
 
 name: CI/CD
 
@@ -8,9 +10,8 @@ on:
 jobs:
   a:
     runs-on: ubuntu-20.04
-    if: 'false'
     steps:
-      - run: 'true'
+      - run: 'false'
 
   b:
     runs-on: ubuntu-20.04
