@@ -4,18 +4,12 @@ on:
   - push
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
-    steps:
-      - run: 'true'
-
   trigger_test:
     runs-on: ubuntu-20.04
-    needs: build
     steps:
       - uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/actions/workflows/test-test/dispatches
-          ref: ${{ github.ref }}
+          ref: ${{ github.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
