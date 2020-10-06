@@ -31,5 +31,5 @@ jobs:
     # Run even if a dependent job has been skipped
     if: '!failure() && !cancelled()'
     steps:
-      - run: 'echo failed=${{ failure() }}'
+      - run: 'echo status=${{ job.status }}'
       - run: 'false'
