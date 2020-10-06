@@ -4,40 +4,18 @@ on:
   - push
 
 jobs:
-  job1:
+  commit_published_packages_test:
     runs-on: ubuntu-20.04
-    outputs:
-      json: ${{ steps.test.outputs.matrix }}
-      test2: ${{ steps.test2.outputs.matrix }}
-      test3: ${{ steps.test3.outputs.matrix }}
+    if: 'false'
     steps:
-      - uses: actions/checkout@v2
-      - name: test no clear
-        id: test
-        #run: echo '::set-output name=matrix::{"foo":"bar","bool1":true,"bool2":false}'
-        run: |
-          ruby -e 'str = " " * (512 * 1024); puts "::set-output name=matrix::#{str}"'
-      - id: test2
-        run: |
-          ruby -e 'str = " " * (512 * 1024); puts "::set-output name=matrix::#{str}"'
-      - id: test3
-        run: |
-          ruby -e 'str = " " * (512 * 1024); puts "::set-output name=matrix::#{str}"'
-  
-  # job2:
-  #   runs-on: ubuntu-20.04
-  #   needs: job1
-  #   #if: contains(needs.job1.outputs.json, 'A')
-  #   steps:
-  #     - run: ruby -e 'p ENV["DATA"].size'
-  #       env:
-  #         DATA: ${{ needs.job1.outputs.json }}
+      - run: 'true'
 
-  # job3:
-  #   runs-on: ubuntu-20.04
-  #   needs: job1
-  #   if: contains(needs.job1.outputs.json, 'B')
-  #   steps:
-  #     - run: echo "$DATA"
-  #       env:
-  #         DATA: ${{ needs.job1.outputs.json }}
+  test_packages_against_test:
+    runs-on: ubuntu-20.04
+    needs:
+      - commit_published_packages_test
+    if: |
+      true
+      && !failure() && !cancelled()
+    steps:
+      - run: 'false'
