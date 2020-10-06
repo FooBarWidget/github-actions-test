@@ -29,5 +29,7 @@ jobs:
     # Run even if a dependent job has been skipped
     if: '!failure() && !cancelled()'
     steps:
-      - run: 'echo status=${{ job.status }}, commit=${{ toJSON(needs.publish_ruby_packages_test) }}'
+      - run: 'echo status=${{ job.status }}, commit="$COMMIT"'
+        env:
+          COMMIT: ${{ toJSON(needs.publish_ruby_packages_test) }}
       - run: 'false'
