@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs:
       - publish_ruby_packages_test
+      - build_ruby1
     # Run even if a dependent job has been skipped
     if: '!failure() && !cancelled()'
     steps:
