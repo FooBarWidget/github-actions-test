@@ -4,9 +4,44 @@ on:
   - push
 
 jobs:
+  publish_common_and_rbenv_debs_test:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: 'true'
+
+  publish_common_and_rbenv_rpms_test:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: 'true'
+
+  build_ruby1:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: 'false'
+
+  build_ruby2:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: 'false'
+
+  publish_ruby_packages_test:
+    runs-on: ubuntu-20.04
+    needs:
+      - build_ruby1
+      - build_ruby2
+    # Run even if a dependent job has been skipped
+    if: '!failure() && !cancelled()'
+    steps:
+      - run: 'true'
+
   commit_published_packages_test:
     runs-on: ubuntu-20.04
-    if: 'false'
+    needs:
+      - publish_common_and_rbenv_debs_test
+      - publish_common_and_rbenv_rpms_test
+      - publish_ruby_packages_test
+    # Run even if a dependent job has been skipped
+    if: '!failure() && !cancelled()'
     steps:
       - run: 'true'
 
@@ -15,6 +50,7 @@ jobs:
     needs:
       - commit_published_packages_test
     if: |
-      true && !failure() && !cancelled()
+      true
+      && !failure() && !cancelled()
     steps:
       - run: 'false'
