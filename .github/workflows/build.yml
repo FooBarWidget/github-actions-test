@@ -43,6 +43,6 @@ jobs:
       - uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/actions/workflows/test-test.yml/dispatches
-          ref: ${{ github.sha }}
+          ref: ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
