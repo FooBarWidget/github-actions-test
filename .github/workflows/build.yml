@@ -11,14 +11,15 @@ jobs:
         id: create_check_run
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          debug: true
+          encoding: string
           script: |
             const url = `POST /repos/:repository/check-runs`;
-            return github.request(url, {
+            var result = github.request(url, {
               name: 'Tests',
               head_sha: '${{ github.sha }}',
               repository: process.env.GITHUB_REPOSITORY
             });
+            return result.id;
 
       - run: echo "$DUMP"
         env:
@@ -37,4 +38,4 @@ jobs:
               }
             });
         env:
-          TEST_CHECK_RUN_ID: ${{ steps.create_check_run.outputs.id }}
+          TEST_CHECK_RUN_ID: ${{ steps.create_check_run.outputs.result }}
