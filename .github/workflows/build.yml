@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/github-script@v3
+        id: create_check_run
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -26,6 +27,9 @@ jobs:
             github.request(url, {
               ref: process.env.GITHUB_REF,
               inputs: {
-                parent_run_number: process.env.GITHUB_RUN_NUMBER
+                parent_run_number: process.env.GITHUB_RUN_NUMBER,
+                test_check_run_id: process.env.TEST_CHECK_RUN_ID
               }
             });
+        env:
+          TEST_CHECK_RUN_ID: ${{ steps.create_check_run.outputs.id }}

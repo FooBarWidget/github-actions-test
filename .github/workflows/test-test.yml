@@ -5,6 +5,8 @@ on:
     inputs:
       parent_run_number:
         required: false
+      test_check_run_id:
+        required: false
 
 jobs:
   test:
@@ -13,3 +15,13 @@ jobs:
       - run: echo "$EVENT"
         env:
           EVENT: ${{ toJSON(github.event) }}
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const url = `PATCH /repos/:repository/check-runs`;
+            github.request(url, {
+              name: 'Tests',
+              head_sha: '${{ github.sha }}',
+              repository: process.env.GITHUB_REPOSITORY
+            });
