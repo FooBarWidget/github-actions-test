@@ -7,6 +7,8 @@ jobs:
   trigger_test:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+
       - uses: octokit/request-action@v2.x
         id: create_check_run
         with:
@@ -44,5 +46,9 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/actions/workflows/test-test.yml/dispatches
           ref: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: node .github/actions/dispatch-test.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
