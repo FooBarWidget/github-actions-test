@@ -7,21 +7,25 @@ jobs:
   trigger_test:
     runs-on: ubuntu-20.04
     steps:
-      - run: 'true'
-      
-      # - uses: actions/github-script@v3
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     script: |
-      #       const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/check-runs`;
-      #       github.request(url, {
-      #         name: 'Tests',
-      #         head_sha: '${{ github.sha }}'
-      #       });
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const url = `POST /repos/:repository/check-runs`;
+            github.request(url, {
+              name: 'Tests',
+              head_sha: '${{ github.sha }}',
+              repository: process.env.GITHUB_REPOSITORY
+            });
 
-      # - uses: actions/github-script@v3
-      #   with:
-      #     github-token: ${{ secrets.PAT }}
-      #     script: |
-      #       const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
-      #       github.request(url, { ref: process.env.GITHUB_REF });
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
+            github.request(url, {
+              ref: process.env.GITHUB_REF,
+              inputs: {
+                parent_run_number: process.env.GITHUB_RUN_NUMBER
+              }
+            });

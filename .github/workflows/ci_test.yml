@@ -5,11 +5,6 @@ on:
     inputs:
       parent_run_number:
         required: false
-  workflow_run:
-    workflows:
-      - 'ci_build'
-    #types:
-    #  - completed
 
 jobs:
   test:
