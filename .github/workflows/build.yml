@@ -14,7 +14,7 @@ jobs:
           encoding: string
           script: |
             const url = `POST /repos/:repository/check-runs`;
-            var result = github.request(url, {
+            var result = await github.request(url, {
               name: 'Tests',
               head_sha: '${{ github.sha }}',
               repository: process.env.GITHUB_REPOSITORY
