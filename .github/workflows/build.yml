@@ -44,7 +44,7 @@ jobs:
 
       - run: |
           curl -vfsSL -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.PAT }}" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/test-test.yml/dispatches" \
             -d '{ "ref": "'"$GITHUB_REF"'" }'
 
