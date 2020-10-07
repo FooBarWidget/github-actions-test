@@ -1,4 +1,4 @@
-name: 'CI: test'
+name: 'ci_test'
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
         required: false
   workflow_run:
     workflows:
-      - 'CI: build'
+      - 'ci_build'
     #types:
     #  - completed
 
