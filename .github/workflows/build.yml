@@ -11,7 +11,7 @@ jobs:
         id: create_check_run
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          encoding: string
+          result-encoding: string
           script: |
             const url = `POST /repos/:repository/check-runs`;
             var result = await github.request(url, {
@@ -19,7 +19,7 @@ jobs:
               head_sha: '${{ github.sha }}',
               repository: process.env.GITHUB_REPOSITORY
             });
-            return result.id;
+            return result.data.id;
 
       - run: echo "$DUMP"
         env:
