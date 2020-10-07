@@ -42,12 +42,10 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: octokit/request-action@v2.x
+      # Install Node 12
+      - uses: actions/setup-node@v1
         with:
-          route: POST /repos/${{ github.repository }}/actions/workflows/test-test.yml/dispatches
-          ref: ${{ github.ref }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          version: 12
 
       - run: node .github/actions/dispatch-test.js
         env:
