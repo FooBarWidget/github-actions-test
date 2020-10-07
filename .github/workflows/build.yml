@@ -21,16 +21,13 @@ jobs:
             });
             return result.data.id;
 
-      - run: echo "$DUMP"
-        env:
-          DUMP: ${{ toJSON(steps.create_check_run.outputs) }}
-
       - uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.PAT }}
           script: |
-            const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
+            const url = `POST /repos/:repository/actions/workflows/test-test.yml/dispatches`;
             github.request(url, {
+              repository: process.env.GITHUB_REPOSITORY,
               ref: process.env.GITHUB_REF,
               inputs: {
                 parent_run_number: process.env.GITHUB_RUN_NUMBER,

@@ -19,9 +19,14 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const url = `PATCH /repos/:repository/check-runs`;
+            const url = `PATCH /repos/:repository/check-runs/:id`;
             github.request(url, {
-              name: 'Tests',
-              head_sha: '${{ github.sha }}',
-              repository: process.env.GITHUB_REPOSITORY
+              repository: process.env.GITHUB_REPOSITORY,
+              id: github.event.inputs.test_check_run_id,
+              status: 'completed',
+              conclusion: 'success',
+              output: {
+                title: 'Test successful',
+                summary: `[See details](/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.GITHUB_RUN_ID})`
+              }
             });
