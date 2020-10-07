@@ -2,6 +2,9 @@ name: 'CI: test'
 
 on:
   workflow_dispatch: {}
+  repository_dispatch:
+    types:
+      - test-test
 
 jobs:
   test:

@@ -47,4 +47,4 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
-            github.request(url, { ref: process.env.GITHUB_REF });
+            return await github.request(url, { ref: process.env.GITHUB_REF });
