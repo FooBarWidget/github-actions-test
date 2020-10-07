@@ -43,10 +43,10 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
-          http -p HBhb \
+          curl -vfsSL -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/test-test.yml/dispatches" \
-            "Authorization:Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "ref=$GITHUB_REF"
+            -d '{ "ref": "'"$GITHUB_REF"'" }'
 
       # - uses: actions/github-script@v3
       #   with:
