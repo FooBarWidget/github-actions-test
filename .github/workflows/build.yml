@@ -42,16 +42,9 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: |
-          curl -vfsSL -X POST \
-            -H "Authorization: Bearer ${{ secrets.PAT }}" \
-            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/test-test.yml/dispatches" \
-            -d '{ "ref": "'"$GITHUB_REF"'" }'
-
-      # - uses: actions/github-script@v3
-      #   with:
-      #     github-token: ${{secrets.GITHUB_TOKEN}}
-      #     debug: true
-      #     script: |
-      #       const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
-      #       return await github.request(url, { ref: process.env.GITHUB_REF });
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
+            github.request(url, { ref: process.env.GITHUB_REF });
