@@ -22,7 +22,7 @@ jobs:
         with:
           github-token: ${{ secrets.PAT }}
           script: |
-            const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/ci_test.yml/dispatches`;
+            const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
             github.request(url, {
               ref: process.env.GITHUB_REF,
               inputs: {
