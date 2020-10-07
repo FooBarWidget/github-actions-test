@@ -7,15 +7,17 @@ jobs:
   trigger_test:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/github-script@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/check-runs`;
-            github.request(url, {
-              name: 'Tests',
-              head_sha: '${{ github.sha }}'
-            });
+      - run: 'true'
+      
+      # - uses: actions/github-script@v3
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/check-runs`;
+      #       github.request(url, {
+      #         name: 'Tests',
+      #         head_sha: '${{ github.sha }}'
+      #       });
 
       # - uses: actions/github-script@v3
       #   with:
