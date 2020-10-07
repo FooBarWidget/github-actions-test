@@ -42,11 +42,9 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Install Node 12
-      - uses: actions/setup-node@v1
+      - uses: actions/github-script@v3
         with:
-          version: 12
-
-      - run: node .github/actions/dispatch-test.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const url = `POST /repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/test-test.yml/dispatches`;
+            github.request(url, { ref: process.env.GITHUB_REF });
