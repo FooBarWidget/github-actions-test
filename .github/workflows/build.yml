@@ -14,7 +14,7 @@ jobs:
           debug: true
           script: |
             const url = `POST /repos/:repository/check-runs`;
-            github.request(url, {
+            return github.request(url, {
               name: 'Tests',
               head_sha: '${{ github.sha }}',
               repository: process.env.GITHUB_REPOSITORY
