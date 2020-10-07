@@ -27,6 +27,6 @@ jobs:
               conclusion: 'success',
               output: {
                 title: 'Test successful',
-                summary: `[See details](/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.GITHUB_RUN_ID})`
+                summary: `[See details](/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`
               }
             });
