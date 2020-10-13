@@ -7,32 +7,11 @@ jobs:
   trigger_test:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/github-script@v3
-        id: create_check_run
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          result-encoding: string
-          script: |
-            const url = `POST /repos/:repository/check-runs`;
-            var result = await github.request(url, {
-              name: 'Tests',
-              head_sha: '${{ github.sha }}',
-              repository: process.env.GITHUB_REPOSITORY
-            });
-            return result.data.id;
+      - run: sleep 10
+      - run: 'false'
 
-      - uses: actions/github-script@v3
-        with:
-          github-token: ${{ secrets.PAT }}
-          script: |
-            const url = `POST /repos/:repository/actions/workflows/test-test.yml/dispatches`;
-            github.request(url, {
-              repository: process.env.GITHUB_REPOSITORY,
-              ref: process.env.GITHUB_REF,
-              inputs: {
-                parent_run_number: process.env.GITHUB_RUN_NUMBER,
-                test_check_run_id: process.env.TEST_CHECK_RUN_ID
-              }
-            });
-        env:
-          TEST_CHECK_RUN_ID: ${{ steps.create_check_run.outputs.result }}
+  fail:
+    runs-on: ubuntu-20.04
+    if: failure()
+    steps:
+      - run: echo fail
