@@ -17,7 +17,7 @@ jobs:
           details_url: https://github.com/1234
           output: |
             {
-              "summary": "[Go to Github Actions run #1234](https://github.com/1234)"
+              "summary": "Packages are being built in another workflow.\n[**➜ See workflow run #1234 for logs**](https://github.com/1234)"
             }
       - run: sleep 10
       - run: 'false'
