@@ -15,10 +15,10 @@ jobs:
           name: Build packages
           status: queued
           details_url: https://github.com/1234
-          output:
-            title: 'More details at Github Actions run #1234'
-            summary: |
-              [Go to Github Actions run #1234](https://github.com/1234)
+          output: |
+            {
+              "summary": "[Go to Github Actions run #1234](https://github.com/1234)"
+            }
       - run: sleep 10
       - run: 'false'
 
