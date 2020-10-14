@@ -7,6 +7,18 @@ jobs:
   trigger_test:
     runs-on: ubuntu-20.04
     steps:
+      - name: Create check for 'Build packages'
+        uses: LouisBrunner/checks-action@v1.1.0
+        id: create_check_build_packages
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Build packages
+          status: queued
+          details_url: https://github.com/1234
+          output:
+            title: 'More details at Github Actions run #1234'
+            summary: |
+              [Go to Github Actions run #1234](https://github.com/1234)
       - run: sleep 10
       - run: 'false'
 
