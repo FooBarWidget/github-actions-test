@@ -10,5 +10,5 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: echo v1
+      - run: echo v2
       - run: cat README.md
