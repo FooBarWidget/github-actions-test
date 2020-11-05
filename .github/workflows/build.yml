@@ -3,7 +3,7 @@ name: 'CI: build'
 on:
   push: {}
   pull_request_target:
-    types: [synchronize]
+    types: [opened, synchronize]
 
 jobs:
   foo:
