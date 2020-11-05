@@ -11,4 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo v1
+      - run: echo "$INPUT"
+        env:
+          INPUT: ${{ toJSON(github.event) }}
       - run: cat README.md
