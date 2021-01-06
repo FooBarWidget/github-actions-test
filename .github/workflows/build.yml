@@ -7,10 +7,7 @@ on:
 
 jobs:
   foo:
-    runs-on: ubuntu-20.04
+    runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
-      - run: false
-        id: f
-      - run: echo previous step failed
-        if: failure() && steps.f.outcome == 'failure'
+      - run: csrutil status
