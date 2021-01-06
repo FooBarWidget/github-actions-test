@@ -11,3 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: csrutil status
+      - run: DYLD_LIBRARY_PATH=/foo /bin/sh -c 'echo $DYLD_LIBRARY_PATH'
