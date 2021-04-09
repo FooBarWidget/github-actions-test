@@ -22,10 +22,10 @@ jobs:
 
           if PREVIOUS_RELEASE_TAG=$(git describe "$MERGE_BASE" --tags --abbrev=0 --match='v*' 2>/dev/null); then
             echo "Previous release: $PREVIOUS_RELEASE_TAG"
-            git log --pretty='format:%s' "$PREVIOUS_RELEASE_TAG..HEAD" | sed -e 's|(.*)| * \1|' > changelog.txt
+            git log --pretty='format:%s' "$PREVIOUS_RELEASE_TAG..HEAD" | sed -E 's|(.*)| * \1|' > changelog.txt
           else
             echo "No previous release found"
-            git log --pretty='format:%s' | sed -e 's|(.*)| * \1|' > changelog.txt
+            git log --pretty='format:%s' | sed -E 's|(.*)| * \1|' > changelog.txt
           fi
 
           echo
