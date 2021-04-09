@@ -2,13 +2,16 @@ name: 'CI: build'
 
 on:
   push: {}
-  pull_request_target:
-    types: [opened, synchronize]
 
 jobs:
   foo:
-    runs-on: macos-10.15
+    runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v2
-      - run: csrutil status
-      - run: DYLD_LIBRARY_PATH=/foo /bin/sh -c 'echo $DYLD_LIBRARY_PATH'
+      - run: |
+          false
+          true
+      - run: 'false'
+      - run: |
+          $ErrorActionPreference = 'Stop'
+          false
+          true
