@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Fetch tags
-        run: git fetch
+        run: git fetch --tags
 
       - name: Determine changelog
         run: |
-          MERGE_BASE=$(git merge-base origin/main HEAD)
+          MERGE_BASE=$(git merge-base origin/master HEAD)
           if PREVIOUS_RELEASE_TAG=$(git describe "$MERGE_BASE" --tags --abbrev=0 --match='v*' 2>/dev/null); then
             git log --pretty='format:%s' "$PREVIOUS_RELEASE_TAG..HEAD" > changelog.txt
           else
