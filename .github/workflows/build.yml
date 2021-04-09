@@ -23,4 +23,7 @@ jobs:
       
       - run: |
           docker x
+          if ($LastExitCode -ne 0) {
+            exit 1
+          }
           docker --help
