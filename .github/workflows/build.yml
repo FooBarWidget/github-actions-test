@@ -39,6 +39,6 @@ jobs:
           git push origin "v${PRODUCT_VERSION}"
 
       - name: Create release
-        run: gh release create --draft --notes-file changelog.txt --title "Version $PRODUCT_VERSION"
+        run: gh release create "$v{PRODUCT_VERSION}" --draft --notes-file changelog.txt --title "Version $PRODUCT_VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
