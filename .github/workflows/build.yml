@@ -5,22 +5,34 @@ on:
 
 jobs:
   foo:
-    runs-on: windows-2019
+    runs-on: ubuntu-20.04
+    env:
+      PRODUCT_VERSION: '0.9.0'
     steps:
-      # fails
-      # - run: |
-      #     false
-      #     true
-      #     false
-      
-      # succeeds
-      # - run: |
-      #     false
-      #     true
+      - uses: actions/checkout@v2
+      - name: Fetch tags
+        run: git fetch
 
-      # fails
-      #- run: 'false'
-      
-      - run: |
-          docker --help
-          docker y
+      - name: Determine changelog
+        run: |
+          MERGE_BASE=$(git merge-base origin/main HEAD)
+          if PREVIOUS_RELEASE_TAG=$(git describe "$MERGE_BASE" --tags --abbrev=0 --match='v*' 2>/dev/null); then
+            git log --pretty='format:%s' "$PREVIOUS_RELEASE_TAG..HEAD" > changelog.txt
+          else
+            git log --pretty='format:%s' > changelog.txt
+          fi
+          cat changelog.txt
+
+      - name: Login to Github
+        run: gh auth login --with-token <<<"$GITHUB_TOKEN"
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+
+      - name: Create tag
+        run: |
+          set -x
+          git tag "v${PRODUCT_VERSION}"
+          git push origin "v${PRODUCT_VERSION}"
+
+      - name: Create release
+        run: gh release create --draft --notes-file changelog.txt --title "Version $PRODUCT_VERSION"
