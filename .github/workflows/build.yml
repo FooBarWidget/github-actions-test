@@ -22,4 +22,5 @@ jobs:
       #- run: 'false'
       
       - run: |
-          echo hi | docker login -u jfdhksakl--password-stdin quay.io
+          docker x
+          docker --help
