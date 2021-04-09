@@ -11,8 +11,15 @@ jobs:
           false
           true
           false
+      
+      # succeeds
+      # - run: |
+      #     false
+      #     true
+
       # fails
       #- run: 'false'
+      
       - run: |
           $ErrorActionPreference = 'Stop'
           false
