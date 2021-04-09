@@ -7,10 +7,11 @@ jobs:
   foo:
     runs-on: windows-2019
     steps:
-      - run: |
-          false
-          true
-          false
+      # fails
+      # - run: |
+      #     false
+      #     true
+      #     false
       
       # succeeds
       # - run: |
