@@ -10,6 +10,8 @@ jobs:
       PRODUCT_VERSION: '0.9.0'
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Fetch tags
         run: git fetch --tags
 
@@ -26,6 +28,7 @@ jobs:
             git log --pretty='format:%s' > changelog.txt
           fi
 
+          echo
           echo "## Changelog"
           cat changelog.txt
 
@@ -37,3 +40,5 @@ jobs:
 
       - name: Create release
         run: gh release create --draft --notes-file changelog.txt --title "Version $PRODUCT_VERSION"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
