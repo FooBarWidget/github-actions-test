@@ -14,4 +14,6 @@ jobs:
         shell: bash
         env:
           GCLOUD_KEY: ${{ secrets.GCLOUD_KEY }}
+      - name: Set Google Cloud project
+        run: gcloud config set core/project fullstaq-ruby
       - run: gcloud secrets versions access latest --secret gpg-private-key >/dev/null
