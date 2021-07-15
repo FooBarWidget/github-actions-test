@@ -7,9 +7,9 @@ jobs:
   foo:
     runs-on: ubuntu-20.04
     steps:
-      - name: Set status
-        run: echo '::set-output name=status::dit is mijn output tekst'
-        id: combinestepstatus
-      - name: echo
-        run:
-          echo ${{ steps.combinestepstatus.outputs.status}}
+      - name: GCloud login
+        run: gcloud auth activate-service-account --key-file <(base64 -d <<< "$GCLOUD_KEY")
+        shell: bash
+        env:
+          GCLOUD_KEY: ${{ secrets.GCLOUD_KEY }}
+      - run: gcloud secrets versions access latest --secret gpg-private-key >/dev/null
