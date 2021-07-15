@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: GCloud login
-        run: gcloud auth activate-service-account --key-file <(echo <<< "$GCLOUD_KEY")
+        run: |
+          echo "$GCLOUD_KEY" > gcloud.json
+          gcloud auth activate-service-account --key-file gcloud.json
         shell: bash
         env:
           GCLOUD_KEY: ${{ secrets.GCLOUD_KEY }}
