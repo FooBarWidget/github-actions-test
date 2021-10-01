@@ -11,7 +11,14 @@ jobs:
       - run: true
 
   bar:
-    needs: foo
+    runs-on: ubuntu-20.04
+    steps:
+      - run: true
+
+  baz:
+    needs:
+      - foo
+      - bar
     runs-on: ubuntu-20.04
     steps:
       - run: true
