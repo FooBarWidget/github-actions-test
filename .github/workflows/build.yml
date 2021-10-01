@@ -11,7 +11,7 @@ jobs:
       - run: true
 
   bar:
-    depends: foo
+    needs: foo
     runs-on: ubuntu-20.04
     steps:
       - run: true
