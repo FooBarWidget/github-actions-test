@@ -6,19 +6,8 @@ on:
 jobs:
   foo:
     runs-on: ubuntu-20.04
-    if: false
     steps:
-      - run: true
-
-  bar:
-    runs-on: ubuntu-20.04
-    steps:
-      - run: true
-
-  baz:
-    needs:
-      - foo
-      - bar
-    runs-on: ubuntu-20.04
-    steps:
-      - run: true
+      - uses: actions/checkout@v2
+      - uses: ludeeus/action-shellcheck@master
+        env:
+          SHELLCHECK_OPTS: -x
