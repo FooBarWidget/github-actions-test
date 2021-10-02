@@ -7,4 +7,4 @@ jobs:
   foo:
     runs-on: ubuntu-20.04
     steps:
-      - run: cat /etc/docker/daemon.json
+      - run: jq '. + {"experimental":true}' /etc/docker/daemon.json
