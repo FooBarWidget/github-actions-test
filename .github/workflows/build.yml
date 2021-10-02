@@ -7,7 +7,4 @@ jobs:
   foo:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: ludeeus/action-shellcheck@master
-        env:
-          SHELLCHECK_OPTS: -x
+      - run: cat /etc/docker/daemon.json
