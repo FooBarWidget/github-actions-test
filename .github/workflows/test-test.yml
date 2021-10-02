@@ -7,4 +7,4 @@ jobs:
   test:
     runs-on: ubuntu-20.04
     steps:
-      - run: echo test
+      - run: cat /etc/docker/daemon.json
