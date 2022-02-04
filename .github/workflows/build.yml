@@ -4,7 +4,7 @@ on:
   push: {}
 
 defaults:
-  run:
+  run: #
     working-directory: /home/builder
 
 jobs:
