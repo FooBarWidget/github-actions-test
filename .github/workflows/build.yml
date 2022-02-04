@@ -4,7 +4,7 @@ on:
   push: {}
 
 defaults:
-  run: #
+  run:
     working-directory: /home/builder
 
 jobs:
@@ -15,9 +15,6 @@ jobs:
       - run: curl https://ifconfig.me
       - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
       - run: tar xjf jemalloc-3.6.0.tar.bz2
-      - run: cat "$KEY" > /gcloud-credentials.json
-        env:
-          KEY: ${{ secrets.FS_RUBY_GCLOUD_KEY }}
       - run: sccache
         env:
           SCCACHE_START_SERVER: 1
@@ -32,13 +29,13 @@ jobs:
     container: fullstaq/ruby-build-env-debian-11:sccache-test
     env:
       SCCACHE_GCS_BUCKET: fullstaq-ruby-server-edition-ci-cache
-      SCCACHE_GCS_KEY_PATH: /gcloud-credentials.json
+      SCCACHE_GCS_KEY_PATH: /home/builder/gcloud-credentials.json
       SCCACHE_GCS_RW_MODE: READ_WRITE
     steps:
       - run: curl https://ifconfig.me
       - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
       - run: tar xjf jemalloc-3.6.0.tar.bz2
-      - run: cat "$KEY" > /gcloud-credentials.json
+      - run: cat "$KEY" > /home/builder/gcloud-credentials.json
         env:
           KEY: ${{ secrets.FS_RUBY_GCLOUD_KEY }}
       - run: sccache
