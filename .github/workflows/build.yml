@@ -4,7 +4,8 @@ on:
   push: {}
 
 defaults:
-  working-directory: /home/builder
+  run:
+    working-directory: /home/builder
 
 jobs:
   vanilla:
