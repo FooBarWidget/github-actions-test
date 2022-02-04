@@ -5,6 +5,7 @@ on:
 
 jobs:
   vanilla:
+    runs-on: ubuntu-20.04
     container: fullstaq/ruby-build-env-debian-11:sccache-test
     steps:
       - run: wget https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
@@ -22,6 +23,7 @@ jobs:
         run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
 
   gcloud:
+    runs-on: ubuntu-20.04
     container: fullstaq/ruby-build-env-debian-11:sccache-test
     env:
       SCCACHE_GCS_BUCKET: fullstaq-ruby-server-edition-ci-cache
