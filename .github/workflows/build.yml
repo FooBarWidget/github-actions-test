@@ -15,14 +15,11 @@ jobs:
       - run: curl https://ifconfig.me
       - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
       - run: tar xjf jemalloc-3.6.0.tar.bz2
-      - run: sccache
-        env:
-          SCCACHE_START_SERVER: 1
       - name: Cold
-        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
+        run: cd jemalloc-3.6.0 && ./configure --enable-shared --disable-static && make -j2
       - run: rm -rf jemalloc-3.6.0 && tar xjf jemalloc-3.6.0.tar.bz2
       - name: Hot
-        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
+        run: cd jemalloc-3.6.0 && ./configure --enable-shared --disable-static && make -j2
 
   gcloud:
     runs-on: ubuntu-20.04
@@ -35,7 +32,7 @@ jobs:
       - run: curl https://ifconfig.me
       - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
       - run: tar xjf jemalloc-3.6.0.tar.bz2
-      - run: cat "$KEY" > /home/builder/gcloud-credentials.json
+      - run: echo "$KEY" > /home/builder/gcloud-credentials.json
         env:
           KEY: ${{ secrets.FS_RUBY_GCLOUD_KEY }}
       - run: sccache
