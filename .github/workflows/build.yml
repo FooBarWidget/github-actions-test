@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-20.04
     container: fullstaq/ruby-build-env-debian-11:sccache-test
     steps:
-      - run: wget https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
+      - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
       - run: tar xjf jemalloc-3.6.0.tar.bz2
       - run: cat "$KEY" > /gcloud-credentials.json
         env:
@@ -30,7 +30,7 @@ jobs:
       SCCACHE_GCS_KEY_PATH: /gcloud-credentials.json
       SCCACHE_GCS_RW_MODE: READ_WRITE
     steps:
-      - run: wget https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
+      - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
       - run: tar xjf jemalloc-3.6.0.tar.bz2
       - run: cat "$KEY" > /gcloud-credentials.json
         env:
