@@ -1,11 +1,43 @@
 name: 'CI: build'
 
 on:
-  pull_request: {}
   push: {}
 
 jobs:
-  foo:
-    runs-on: ubuntu-20.04
+  vanilla:
+    container: fullstaq/ruby-build-env-debian-11:sccache-test
     steps:
-      - run: jq '. + {"experimental":true}' /etc/docker/daemon.json
+      - run: wget https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
+      - run: tar xjf jemalloc-3.6.0.tar.bz2
+      - run: cat "$KEY" > /gcloud-credentials.json
+        env:
+          KEY: ${{ secrets.FS_RUBY_GCLOUD_KEY }}
+      - run: sccache
+        env:
+          SCCACHE_START_SERVER: 1
+      - name: Cold
+        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
+      - run: rm -rf jemalloc-3.6.0 && tar xjf jemalloc-3.6.0.tar.bz2
+      - name: Hot
+        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
+
+  gcloud:
+    container: fullstaq/ruby-build-env-debian-11:sccache-test
+    env:
+      SCCACHE_GCS_BUCKET: fullstaq-ruby-server-edition-ci-cache
+      SCCACHE_GCS_KEY_PATH: /gcloud-credentials.json
+      SCCACHE_GCS_RW_MODE: READ_WRITE
+    steps:
+      - run: wget https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
+      - run: tar xjf jemalloc-3.6.0.tar.bz2
+      - run: cat "$KEY" > /gcloud-credentials.json
+        env:
+          KEY: ${{ secrets.FS_RUBY_GCLOUD_KEY }}
+      - run: sccache
+        env:
+          SCCACHE_START_SERVER: 1
+      - name: Cold
+        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
+      - run: rm -rf jemalloc-3.6.0 && tar xjf jemalloc-3.6.0.tar.bz2
+      - name: Hot
+        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
