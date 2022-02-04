@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     container: fullstaq/ruby-build-env-debian-11:sccache-test
     steps:
+      - run: id && pwd
+      - run: ls -lhFd --color .
+      - run: ls -lhF --color .
       - run: curl https://ifconfig.me
       - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
       - run: tar xjf jemalloc-3.6.0.tar.bz2
