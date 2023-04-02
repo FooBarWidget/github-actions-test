@@ -3,62 +3,12 @@ name: 'CI: build'
 on:
   push: {}
 
-defaults:
-  run:
-    working-directory: /home/builder
-
 jobs:
-  vanilla:
-    runs-on: ubuntu-20.04
-    container: fullstaq/ruby-build-env-debian-11:sccache-test
+  test:
+    runs-on: ubuntu-22.04
     steps:
-      - run: curl https://ifconfig.me
-      - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
-      - run: tar xjf jemalloc-3.6.0.tar.bz2
-      - name: Cold
-        run: cd jemalloc-3.6.0 && ./configure --enable-shared --disable-static && make -j2
-      - run: rm -rf jemalloc-3.6.0 && tar xjf jemalloc-3.6.0.tar.bz2
-      - name: Hot
-        run: cd jemalloc-3.6.0 && ./configure --enable-shared --disable-static && make -j2
-
-  gcloud:
-    runs-on: ubuntu-20.04
-    container: fullstaq/ruby-build-env-debian-11:sccache-test
-    env:
-      SCCACHE_GCS_BUCKET: fullstaq-ruby-server-edition-ci-cache
-      SCCACHE_GCS_KEY_PATH: /home/builder/gcloud-credentials.json
-      SCCACHE_GCS_RW_MODE: READ_WRITE
-    steps:
-      - run: curl https://ifconfig.me
-      - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
-      - run: tar xjf jemalloc-3.6.0.tar.bz2
-      - run: echo "$KEY" > /home/builder/gcloud-credentials.json
-        env:
-          KEY: ${{ secrets.FS_RUBY_GCLOUD_KEY }}
-      - run: sccache
-        env:
-          SCCACHE_START_SERVER: 1
-      - name: Cold
-        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
-      - run: rm -rf jemalloc-3.6.0 && tar xjf jemalloc-3.6.0.tar.bz2
-      - name: Hot
-        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
-
-  azure:
-    runs-on: ubuntu-20.04
-    container: fullstaq/ruby-build-env-debian-11:sccache-test
-    env:
-      SCCACHE_AZURE_CONNECTION_STRING: 'DefaultEndpointsProtocol=https;AccountName=honglistoragetestuseast2;AccountKey=/B8wKTJBz1Xy/R/U4KA1stdo6DjAqfTB7wvRen9gPM+XVPd0SkA/Yp2+B5lHnYT0cc5IHpqucWzxBTjORpmArQ==;EndpointSuffix=core.windows.net'
-      SCCACHE_AZURE_BLOB_CONTAINER: test
-    steps:
-      - run: curl https://ifconfig.me
-      - run: curl -fsSLO https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2
-      - run: tar xjf jemalloc-3.6.0.tar.bz2
-      - run: sccache
-        env:
-          SCCACHE_START_SERVER: 1
-      - name: Cold
-        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
-      - run: rm -rf jemalloc-3.6.0 && tar xjf jemalloc-3.6.0.tar.bz2
-      - name: Hot
-        run: cd jemalloc-3.6.0 && export PATH="/usr/local/lib/sccache:$PATH" && ./configure --enable-shared --disable-static && make -j2
+      - run: pwd
+      - run: df -h
+      - run: du -chd 1 /usr/share/dotnet
+      - run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
+      - run: find "$AGENT_TOOLSDIRECTORY" -maxdepth 2
