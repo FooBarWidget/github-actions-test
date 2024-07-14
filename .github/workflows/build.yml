@@ -7,6 +7,11 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          version: '>= 363.0.0'
+      - run: which gcloud
       - run: pwd
       - run: df -h
       - run: echo "$AGENT_TOOLSDIRECTORY"
