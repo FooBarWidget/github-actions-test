@@ -16,7 +16,6 @@ jobs:
           sudo apt purge -y aria2 shellcheck rpm zsync google-chrome-stable
           sudo apt purge -y ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev
           sudo apt purge -y libfreetype6-dev
-          sudo apt purge -y libfreetype6
           sudo apt purge -y libfontconfig1
           sudo apt purge -y snmp
           sudo apt purge -y pollinate
