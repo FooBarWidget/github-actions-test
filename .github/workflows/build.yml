@@ -14,7 +14,7 @@ jobs:
       - run: which gcloud
       - run: pwd
       - run: df -h
-      - run: echo "$AGENT_TOOLSDIRECTORY"
+      - run: ls -l "$AGENT_TOOLSDIRECTORY"
       #- run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
       - run: |
           set -x
