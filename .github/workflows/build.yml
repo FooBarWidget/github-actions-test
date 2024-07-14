@@ -15,8 +15,12 @@ jobs:
           set -x
           sudo apt purge -y aria2 shellcheck rpm zsync google-chrome-stable
           sudo apt purge -y ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev
-          sudo apt purge -y libfreetype6 libfreetype6-dev libfontconfig1
-          sudo apt purge -y snmp pollinate libpq-dev sphinxsearch
+          sudo apt purge -y libfreetype6 libfreetype6-dev
+          sudo apt purge -y libfontconfig1
+          sudo apt purge -y snmp
+          sudo apt purge -y pollinate
+          sudo apt purge -y libpq-dev
+          sudo apt purge -y sphinxsearch
           # sudo apt purge aria2 shellcheck rpm zsync google-chrome-stable \
           #   ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev \
           #   libfreetype6 libfreetype6-dev libfontconfig1 snmp pollinate libpq-dev sphinxsearch
