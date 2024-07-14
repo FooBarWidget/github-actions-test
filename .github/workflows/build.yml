@@ -13,20 +13,14 @@ jobs:
       #- run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
       - run: |
           set -x
-          sudo apt purge -y aria2 shellcheck rpm zsync google-chrome-stable
-          sudo apt purge -y ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev
-          sudo apt purge -y libfreetype6-dev
-          sudo apt purge -y libfontconfig1
-          sudo apt purge -y snmp
-          sudo apt purge -y pollinate
-          sudo apt purge -y libpq-dev
-          sudo apt purge -y sphinxsearch
-          # sudo apt purge aria2 shellcheck rpm zsync google-chrome-stable \
-          #   ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev \
-          #   libfreetype6 libfreetype6-dev libfontconfig1 snmp pollinate libpq-dev sphinxsearch
-          sudo apt purge -y '~n ^mysql'
-          sudo apt purge -y '~n ^php'
-          sudo apt purge -y '~n ^dotnet'
+          sudo apt purge -y aria2 shellcheck rpm zsync google-chrome-stable \
+              ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev \
+              libfreetype6-dev libfontconfig1 snmp pollinate libpq-dev sphinxsearch
+          sudo apt purge -y '^mysql'
+          sudo apt purge -y '^php'
+          sudo apt purge -y '^dotnet'
+          sudo apt autoremove -y
+          sudo apt autoclean -y
           sudo rm -rf "$AGENT_TOOLSDIRECTORY" /usr/share/dotnet /usr/local/lib/android /opt/ghc \
               /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup /usr/lib/jvm
       - run: df -h
