@@ -12,12 +12,12 @@ jobs:
       - run: echo "$AGENT_TOOLSDIRECTORY"
       - run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
       - run: |
-          sudo apt purge -y aria2 ansible shellcheck rpm xorriso zsync firefox gfortran-9 \
-            google-chrome-stable imagemagick libmagickcore-dev libmagickwand-dev libmagic-dev \
-            ant ant-optional kubectl mercurial apt-transport-https mono-complete \
-            unixodbc-dev yarn chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev \
-            libfontconfig1 libfontconfig1-dev snmp pollinate libpq-dev postgresql-client \
-            sphinxsearch subversion
+          set -x
+          sudo apt purge aria2 shellcheck rpm xorriso zsync \
+            google-chrome-stable \
+            ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev libfreetype6 libfreetype6-dev \
+            libfontconfig1 libfontconfig1-dev snmp pollinate libpq-dev \
+            sphinxsearch
           sudo apt purge -y '~n ^mysql'
           sudo apt purge -y '~n ^php'
           sudo apt purge -y '~n ^dotnet'
