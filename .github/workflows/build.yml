@@ -14,6 +14,7 @@ jobs:
           du -chd 1 /usr/share/dotnet /usr/local/lib/android /opt/ghc
           /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup
           /usr/lib/jvm
+        continue-on-error: true
       - run: echo "$AGENT_TOOLSDIRECTORY"
       - run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
       - run: find "$AGENT_TOOLSDIRECTORY" -maxdepth 2
