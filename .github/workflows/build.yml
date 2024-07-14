@@ -12,18 +12,15 @@ jobs:
       - run: echo "$AGENT_TOOLSDIRECTORY"
       - run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
       - run: |
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY" /usr/share/dotnet /usr/local/lib/android /opt/ghc \
-              /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup /usr/lib/jvm
-          sudo apt purge -y aria2 ansible shellcheck rpm xorriso zsync \
-              firefox gfortran-9 google-chrome-stable \
-              imagemagick \
-              libmagickcore-dev libmagickwand-dev libmagic-dev ant ant-optional kubectl \
-              mercurial apt-transport-https mono-complete \
-              unixodbc-dev yarn chrpath libssl-dev libxft-dev \
-              libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
-              snmp pollinate libpq-dev postgresql-client \
-              sphinxsearch subversion microsoft-edge-stable
+          sudo apt purge -y aria2 ansible shellcheck rpm xorriso zsync firefox gfortran-9 \
+            google-chrome-stable imagemagick libmagickcore-dev libmagickwand-dev libmagic-dev \
+            ant ant-optional kubectl mercurial apt-transport-https mono-complete \
+            unixodbc-dev yarn chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev \
+            libfontconfig1 libfontconfig1-dev snmp pollinate libpq-dev postgresql-client \
+            sphinxsearch subversion
           sudo apt purge -y '~n ^mysql'
           sudo apt purge -y '~n ^php'
           sudo apt purge -y '~n ^dotnet'
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY" /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+              /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup /usr/lib/jvm
       - run: df -h
