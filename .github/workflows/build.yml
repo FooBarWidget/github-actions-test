@@ -15,14 +15,14 @@ jobs:
           sudo rm -rf "$AGENT_TOOLSDIRECTORY" /usr/share/dotnet /usr/local/lib/android /opt/ghc \
               /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup /usr/lib/jvm
           sudo apt purge -y aria2 ansible shellcheck rpm xorriso zsync \
-              esl-erlang firefox gfortran-8 gfortran-9 google-chrome-stable \
-              google-cloud-sdk imagemagick \
+              firefox gfortran-9 google-chrome-stable \
+              imagemagick \
               libmagickcore-dev libmagickwand-dev libmagic-dev ant ant-optional kubectl \
-              mercurial apt-transport-https mono-complete libmysqlclient \
+              mercurial apt-transport-https mono-complete \
               unixodbc-dev yarn chrpath libssl-dev libxft-dev \
               libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
-              snmp pollinate libpq-dev postgresql-client powershell \
-              sphinxsearch subversion mongodb-org azure-cli microsoft-edge-stable
+              snmp pollinate libpq-dev postgresql-client \
+              sphinxsearch subversion microsoft-edge-stable
           sudo apt purge -y '~n ^mysql'
           sudo apt purge -y '~n ^php'
           sudo apt purge -y '~n ^dotnet'
