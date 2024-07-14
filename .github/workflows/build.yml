@@ -9,13 +9,21 @@ jobs:
     steps:
       - run: pwd
       - run: df -h
-      - run: df -h .
-      - run: >
-          du -chd 1 /usr/share/dotnet /usr/local/lib/android /opt/ghc
-          /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup
-          /usr/lib/jvm
-        continue-on-error: true
       - run: echo "$AGENT_TOOLSDIRECTORY"
       - run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
-      - run: find "$AGENT_TOOLSDIRECTORY" -maxdepth 2
-      - run: ruby --version
+      - run: |
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY" /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+              /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup /usr/lib/jvm
+          sudo apt purge -y aria2 ansible shellcheck rpm xorriso zsync \
+              esl-erlang firefox gfortran-8 gfortran-9 google-chrome-stable \
+              google-cloud-sdk imagemagick \
+              libmagickcore-dev libmagickwand-dev libmagic-dev ant ant-optional kubectl \
+              mercurial apt-transport-https mono-complete libmysqlclient \
+              unixodbc-dev yarn chrpath libssl-dev libxft-dev \
+              libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
+              snmp pollinate libpq-dev postgresql-client powershell \
+              sphinxsearch subversion mongodb-org azure-cli microsoft-edge-stable
+          sudo apt purge -y '~n ^mysql'
+          sudo apt purge -y '~n ^php'
+          sudo apt purge -y '~n ^dotnet'
+      - run: df -h
