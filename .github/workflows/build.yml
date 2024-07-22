@@ -7,25 +7,10 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
-        with:
-          version: '>= 363.0.0'
-      - run: which gcloud
-      - run: pwd
-      - run: df -h
-      - run: ls -l "$AGENT_TOOLSDIRECTORY"
-      #- run: du -chd 1 "$AGENT_TOOLSDIRECTORY"
-      - run: |
-          set -x
-          sudo apt purge -y aria2 shellcheck rpm zsync google-chrome-stable \
-              ant ant-optional kubectl mercurial apt-transport-https yarn libssl-dev \
-              libfreetype6-dev libfontconfig1 snmp pollinate libpq-dev sphinxsearch
-          sudo apt purge -y '^mysql'
-          sudo apt purge -y '^php'
-          sudo apt purge -y '^dotnet'
-          sudo apt autoremove -y
-          sudo apt autoclean -y
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY" /usr/share/dotnet /usr/local/lib/android /opt/ghc \
-              /usr/local/share/powershell /usr/share/swift /usr/local/.ghcup /usr/lib/jvm
-      - run: df -h
+      - uses: actions/checkout@v4
+  
+  sub1:
+    strategy:
+      matrix:
+        name: ['1', '2']
+    uses: "./.github/workflows/sub-${{ matrix.name }}.yml"

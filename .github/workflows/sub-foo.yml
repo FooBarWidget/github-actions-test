@@ -1,0 +1,8 @@
+on:
+  workflow_call: {}
+
+jobs:
+  foo:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "foo"
