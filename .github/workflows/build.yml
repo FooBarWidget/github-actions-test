@@ -13,4 +13,6 @@ jobs:
     strategy:
       matrix:
         name: ['foo', 'bar']
-    uses: "./.github/workflows/sub-${{ vars.name }}.yml"
+    uses: "./.github/workflows/sub.yml"
+    with:
+      name: ${{ matrix.name }}

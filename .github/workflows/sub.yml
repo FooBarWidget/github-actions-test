@@ -1,0 +1,12 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+
+jobs:
+  foo:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "${{ inputs.name }}"
