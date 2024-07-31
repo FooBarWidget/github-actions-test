@@ -15,7 +15,7 @@ jobs:
         with:
           script: |
             require('fs').writeFileSync(process.env.GITHUB_OUTPUT,
-              'id_token<<EOF' + (await core.getIDToken('https://backend.fullstaqruby.org')) + '\nEOF\n',
+              'id_token<<EOF\n' + (await core.getIDToken('https://backend.fullstaqruby.org')) + '\nEOF\n',
               { flag: 'a' })
       - run: cat $GITHUB_OUTPUT
       - run: |
