@@ -19,6 +19,6 @@ jobs:
               { flag: 'a' })
       - run: cat $GITHUB_OUTPUT
       - run: |
-          curl -X POST -H "Authorization: Bearer $TOKEN" -v "https://apt.fullstaqruby.org/admin/upgrade_apiserver"
+          curl -X POST -H "Authorization: Bearer $TOKEN" -v "https://apt.fullstaqruby.org/admin/restart_web_server"
         env:
           TOKEN: ${{ steps.get-id-token.outputs.id_token }}
