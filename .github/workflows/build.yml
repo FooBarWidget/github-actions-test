@@ -15,8 +15,9 @@ jobs:
         with:
           script: |
             require('fs').writeFileSync(process.env.GITHUB_OUTPUT,
-              'id_token=' + await core.getIDToken('https://backend.fullstaqruby.org'),
+              'id_token<<EOF' + (await core.getIDToken('https://backend.fullstaqruby.org')) + '\nEOF\n',
               { flag: 'a' })
+      - run: cat $GITHUB_OUTPUT
       - run: |
           curl -X POST -H "Authorization: Bearer $TOKEN" -v "https://apt.fullstaqruby.org/admin/upgrade_apiserver"
         env:
