@@ -8,11 +8,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-  
-  sub1:
-    strategy:
-      matrix:
-        name: ['foo', 'bar']
-    uses: "./.github/workflows/sub.yml"
-    with:
-      name: ${{ matrix.name }}
+      - run: ls -l --color -Fh
+      - run: which ruby
+      - run: ruby -v
+      - run: echo $PATH
