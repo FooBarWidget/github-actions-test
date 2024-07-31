@@ -14,7 +14,7 @@ jobs:
         id: get-id-token
         with:
           script: |
-            fs.writeFileSync(process.env.GITHUB_OUTPUT,
+            require('fs').writeFileSync(process.env.GITHUB_OUTPUT,
               'id_token=' + await core.getIDToken('https://backend.fullstaqruby.org'),
               { mode: 'a' })
       - run: |
