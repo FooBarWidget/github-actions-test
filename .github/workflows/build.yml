@@ -6,9 +6,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-      - run: ls -l --color -Fh
-      - run: which ruby
-      - run: ruby -v
-      - run: echo $PATH
+      - uses: actions/github-script@v7
+        with:
+          script: console.log(await core.getIDToken('https://backend.fullstaqruby.org'))
