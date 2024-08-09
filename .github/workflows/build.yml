@@ -17,8 +17,6 @@ jobs:
             require('fs').writeFileSync(process.env.GITHUB_OUTPUT,
               'id_token<<EOF\n' + (await core.getIDToken('backend.fullstaqruby.org')) + '\nEOF\n',
               { flag: 'a' })
-      - run: cat $GITHUB_OUTPUT
-      - run: |
-          curl -X POST -H "Authorization: Bearer $TOKEN" -v "https://apt.fullstaqruby.org/admin/restart_web_server"
+      - run: base64 <<<"$TOKEN"
         env:
           TOKEN: ${{ steps.get-id-token.outputs.id_token }}
