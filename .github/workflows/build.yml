@@ -5,10 +5,10 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - run: gem env
-      - run: sudo apt update
-      - run: sudo apt install -y libcurl4-openssl-dev
+      #- run: sudo apt update
+      #- run: sudo apt install -y libcurl4-openssl-dev
       - run: echo '#include <curl/curl.h>' > test.cpp
       - run: set -o pipefail && c++ -c test.cpp -v | head -n 100
