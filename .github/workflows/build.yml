@@ -20,11 +20,17 @@ jobs:
           rm -rf sccache*
 
           sudo mkdir -p /usr/local/libexec/sccache
-          sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/cc
-          sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/c++
+          for PROG in cc c++; do
+            FULLPATH=$(command -v "$PROG")
+            echo '#!/bin/sh' > "$PROG"
+            echo "/usr/local/bin/sccache $FULLPATH \"\$@\"" >> "$PROG"
+            cat "$PROG"
+            chmod +x "$PROG"
+            sudo mv "$PROG" /usr/local/libexec/sccache/
+          done
 
           touch sccache.log
-          SCCACHE_START_SERVER=1 sccache
+          env SCCACHE_START_SERVER=1 sccache
         env:
           ARCH_AND_OS: x86_64-unknown-linux-musl
       - run: echo > test.c
