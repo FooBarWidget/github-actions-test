@@ -8,5 +8,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - run: echo '#include <openssl/err.h>' > test.cpp
-      - run: brew install openssl@3
       - run: set -o pipefail && c++ -c test.cpp -v | head -n 100
+        env:
+          C_INCLUDE_PATH: /opt/homebrew/opt/openssl@3/include
