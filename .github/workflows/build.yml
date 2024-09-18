@@ -7,6 +7,5 @@ jobs:
   test:
     runs-on: macos-latest
     steps:
-      - run: echo '#include <curl/curl.h>' > test.c
-      - run: cc -c test.c
-      - run: cpp -v <<<'#include <curl/curl.h>' | head
+      - run: echo '#include <curl/curl.h>' > test.cpp
+      - run: c++ -c test.cpp
