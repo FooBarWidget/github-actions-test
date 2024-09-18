@@ -9,7 +9,7 @@ jobs:
     steps:
       - run: |
           echo "PATH=/usr/local/libexec/sccache:/usr/local/bin:$PATH" >> "$GITHUB_ENV"
-          echo "SCCACHE_ERROR_LOG=$(pwd)/sccache.log" >> "$GITHUB_ENV"
+          echo "SCCACHE_LOG=$(pwd)/sccache.log" >> "$GITHUB_ENV"
 
           set -x
 
@@ -23,7 +23,7 @@ jobs:
           for PROG in cc c++; do
             FULLPATH=$(command -v "$PROG")
             echo '#!/bin/sh' > "$PROG"
-            echo "/usr/local/bin/sccache $FULLPATH \"\$@\"" >> "$PROG"
+            echo "exec /usr/local/bin/sccache $FULLPATH \"\$@\"" >> "$PROG"
             cat "$PROG"
             chmod +x "$PROG"
             sudo mv "$PROG" /usr/local/libexec/sccache/
