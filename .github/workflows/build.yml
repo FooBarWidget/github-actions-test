@@ -8,6 +8,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - run: ls -l --color /dev/fd/1
+      - run: file /dev/fd/1
 
       #- run: sudo apt update
       #- run: sudo apt install -y libcurl4-openssl-dev
