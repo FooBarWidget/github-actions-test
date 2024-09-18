@@ -8,6 +8,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - run: gem env
+      - run: system_profiler SPHardwareDataType | grep "Cores"
       #- run: sudo apt update
       #- run: sudo apt install -y libcurl4-openssl-dev
       - run: echo '#include <curl/curl.h>' > test.cpp
