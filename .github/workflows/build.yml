@@ -23,9 +23,12 @@ jobs:
           sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/cc
           sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/c++
 
+          touch sccache.log
           SCCACHE_START_SERVER=1 sccache
         env:
           ARCH_AND_OS: x86_64-unknown-linux-musl
+      - run: echo > test.c
+      - run: cc -c test.c
       - run: |
           sccache --stop-server
           cat sccache.log
