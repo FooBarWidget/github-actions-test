@@ -22,9 +22,9 @@ jobs:
           rm sccache.tar.gz
           sudo mv sccache* /usr/local/bin/sccache
 
-          mkdir -p /usr/local/libexec/sccache
-          sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/cc
-          sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/c++
+          mkdir -p /opt/sccache
+          sudo ln -s /usr/local/bin/sccache /opt/sccache/cc
+          sudo ln -s /usr/local/bin/sccache /opt/sccache/c++
 
           SCCACHE_START_SERVER=1 sccache
 
