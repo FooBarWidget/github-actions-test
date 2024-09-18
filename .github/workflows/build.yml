@@ -28,6 +28,7 @@ jobs:
           ARCH_AND_OS: x86_64-unknown-linux-musl
       - run: |
           sccache --stop-server
+          cat sccache.log
 
       #- run: sudo apt update
       #- run: sudo apt install -y libcurl4-openssl-dev
