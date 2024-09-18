@@ -26,7 +26,7 @@ jobs:
           sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/cc
           sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/c++
 
-          SCCACHE_START_SERVER=1 sccache
+          SCCACHE_START_SERVER=1 /usr/local/bin/sccache
 
       #- run: sudo apt update
       #- run: sudo apt install -y libcurl4-openssl-dev
