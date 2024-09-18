@@ -8,4 +8,4 @@ jobs:
     runs-on: macos-latest
     steps:
       - run: echo '#include <curl/curl.h>' > test.cpp
-      - run: c++ -c test.cpp
+      - run: c++ -c test.cpp -v
