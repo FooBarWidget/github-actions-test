@@ -7,9 +7,7 @@ jobs:
   test:
     runs-on: macos-latest
     steps:
-      - run: ls -l /dev/fd/1
+      - run: ls -l --color /dev/fd/1
 
       #- run: sudo apt update
       #- run: sudo apt install -y libcurl4-openssl-dev
-      - run: echo '#include <curl/curl.h>' > test.cpp
-      - run: set -o pipefail && c++ -c test.cpp -v | head -n 100
