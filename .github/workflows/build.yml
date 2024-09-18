@@ -7,7 +7,27 @@ jobs:
   test:
     runs-on: macos-latest
     steps:
-      - run: ls /usr/local
+      - run: |
+          set -e
+
+          ARCH=aarch64-apple-darwin
+
+          echo "PATH=/usr/local/libexec/sccache:$PATH" >> "$GITHUB_ENV"
+          echo "SCCACHE_ERROR_LOG=$(tty)" >> "$GITHUB_ENV"
+
+          set -x
+
+          wget --output-document sccache.tar.gz "https://github.com/mozilla/sccache/releases/download/v0.8.1/sccache-v0.8.1-$ARCH.tar.gz"
+          tar xzf sccache.tar.gz
+          rm sccache.tar.gz
+          sudo mv sccache* /usr/local/bin/sccache
+
+          mkdir -p /usr/local/libexec/sccache
+          sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/cc
+          sudo ln -s /usr/local/bin/sccache /usr/local/libexec/sccache/c++
+
+          SCCACHE_START_SERVER=1 sccache
+
       #- run: sudo apt update
       #- run: sudo apt install -y libcurl4-openssl-dev
       - run: echo '#include <curl/curl.h>' > test.cpp
