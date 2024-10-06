@@ -25,7 +25,8 @@ jobs:
             extendedKeyUsage = codeSigning
 
       - run: which openssl
-      
+      - run: cat cert_config.cnf
+
       - name: Private key and CSR
         run: openssl req -new -newkey rsa:2048 -nodes -keyout github-ci.key -out github-ci.csr -config cert_config.cnf
 
