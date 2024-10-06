@@ -32,17 +32,15 @@ jobs:
       
       - run: sudo security authorizationdb write com.apple.trust-settings.admin allow
 
-      # - run: security create-keychain -p mypassword mykeychain.keychain
-
-      # - run: security unlock-keychain -p mypassword mykeychain.keychain
+      - run: security create-keychain -p mypassword mykeychain.keychain
+      - run: security set-keychain-settings -lut 21600 mykeychain.keychain
+      - run: security unlock-keychain -p mypassword mykeychain.keychain
       
-      - name: Import key
-        run: security import github-ci.key -k ~/Library/Keychains/login.keychain-db -T /usr/bin/codesign
-
-      - name: Import cert
-        #run: security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.crt
-        run: security import github-ci.crt -k ~/Library/Keychains/login.keychain-db -T /usr/bin/codesign
-      
+      - run: security import github-ci.key -k mykeychain.keychain -A
+      - run: 'security set-key-partition-list -S apple-tool:,apple: -k mypassword mykeychain.keychain'
+      - run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
+      - run: security import github-ci.crt -k mykeychain.keychain
+      - run: security list-keychain -d user -s mykeychain.keychain
       - run: security find-certificate -a -c "Github CI" ~/Library/Keychains/login.keychain-db
       
       - name: Compile
