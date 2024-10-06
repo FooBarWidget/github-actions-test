@@ -48,3 +48,4 @@ jobs:
       
       - name: Sign
         run: codesign -s "Github CI" --keychain mykeychain.keychain foo
+      - run: codesign --verify foo
