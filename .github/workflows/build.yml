@@ -18,7 +18,7 @@ jobs:
             req_extensions = req_ext
 
             [ req_distinguished_name ]
-            CN = Developer
+            CN = Github CI
 
             [ req_ext ]
             keyUsage = critical, digitalSignature, keyEncipherment
@@ -29,9 +29,6 @@ jobs:
 
       - name: Certificate
         run: openssl x509 -req -in github-ci.csr -signkey github-ci.key -out github-ci.crt -days 3650 -extensions req_ext -extfile cert_config.cnf
-      
-      # - name: P12
-      #   run: openssl pkcs12 -export -out github-ci.p12 -inkey github-ci.key -in github-ci.crt -name "Github CI" -password "pass:"
       
       - run: sudo security authorizationdb write com.apple.trust-settings.admin allow
 
@@ -46,7 +43,7 @@ jobs:
         #run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
         run: security import github-ci.crt -k mykeychain.keychain -T /usr/bin/codesign
       
-      - run: security find-certificate -a -c "Github CI" -p mykeychain.keychain
+      - run: security find-certificate -a -c "Github CI" # mykeychain.keychain
       
       - name: Compile
         run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
