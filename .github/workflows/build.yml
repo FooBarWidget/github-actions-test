@@ -30,11 +30,11 @@ jobs:
       - name: Certificate
         run: openssl x509 -req -in github-ci.csr -signkey github-ci.key -out github-ci.crt -days 3650 -extensions req_ext -extfile cert_config.cnf
       
-      - name: Import private key
-        run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.crt
+      - name: P12
+        run: openssl pkcs12 -export -out github-ci.p12 -inkey github-ci.key -in github-ci.crt -name "Github CI"
       
-      - name: Import certificate
-        run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.key
+      - name: Import
+        run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.p12
       
       - name: Compile
         run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
