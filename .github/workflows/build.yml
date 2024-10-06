@@ -18,11 +18,12 @@ jobs:
             req_extensions = req_ext
 
             [ req_distinguished_name ]
-            CN = Github CI
+            CN = Developer
 
             [ req_ext ]
             keyUsage = critical, digitalSignature, keyEncipherment
             extendedKeyUsage = codeSigning
+
 
       - name: Private key and CSR
         run: openssl req -new -newkey rsa:2048 -nodes -keyout github-ci.key -out github-ci.csr -config cert_config.cnf
