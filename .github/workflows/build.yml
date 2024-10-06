@@ -6,67 +6,38 @@ on:
 jobs:
   test:
     runs-on: macos-14
-    env:
-      SCCACHE_LOG: debug
     steps:
-      - run: |
-          ARCH_AND_OS=aarch64-apple-darwin
-          SUDO=true
-
-          ## Ensure Github Actions print stdout and stderr data in correct order.
-          exec 2>&1
-
-          ## Download and install sccache.
-          echo "::group::Download sccache"
-          wget --output-document sccache.tar.gz "https://github.com/mozilla/sccache/releases/download/v0.8.1/sccache-v0.8.1-$ARCH_AND_OS.tar.gz"
-          echo "::endgroup::"
-          set -x
-          tar xzf sccache.tar.gz
-          rm sccache.tar.gz
-          sudo mv sccache*/sccache /usr/local/bin/sccache
-          rm -rf sccache*
-
-          ## Set up sccache as a compiler wrapper.
-          echo "PATH=/usr/local/libexec/sccache:/usr/local/bin:$PATH" >> "$GITHUB_ENV"
-          sudo mkdir -p /usr/local/libexec/sccache
-          for PROG in cc c++; do
-              FULLPATH=$(command -v "$PROG")
-              echo '#!/bin/sh' > "$PROG"
-              echo "exec /usr/local/bin/sccache $FULLPATH \"\$@\"" >> "$PROG"
-              chmod +x "$PROG"
-              sudo mv "$PROG" /usr/local/libexec/sccache/
-          done
-
-          ## Start sccache server.
-
-          ## Uncomment this to have the sccache server write debug logs to sccache.log.
-          # export SCCACHE_LOG=debug
-
-          touch sccache.log
-          export SCCACHE_ERROR_LOG="$(pwd)/sccache.log"
-          echo "SCCACHE_ERROR_LOG=$SCCACHE_ERROR_LOG" >> "$GITHUB_ENV"
-
-          if $SUDO; then
-              sudo -E env SCCACHE_START_SERVER=1 sccache
-          else
-              env SCCACHE_START_SERVER=1 sccache
-          fi
-
-          # Give sccache server some time to start.
-          sleep 0.5
-      
-      - run: sudo -E bash -xc "$SCRIPT" 2>&1
+      - run: echo "$CONFIG" > cert_config.cnf
         env:
-          SCCACHE_LOG: debug
-          SCRIPT: |
-            which cc
-            cc --version
-            touch foo.c
-            cc -c foo.c
-            rm foo.o
+          config: |
+            [ req ]
+            default_bits = 2048
+            prompt = no
+            default_md = sha256
+            distinguished_name = req_distinguished_name
+            req_extensions = req_ext
 
-      - run: |
-          exec 2>&1
-          set -x
-          sudo sccache --stop-server
-          cat sccache.log
+            [ req_distinguished_name ]
+            CN = Github CI
+
+            [ req_ext ]
+            keyUsage = critical, digitalSignature, keyEncipherment
+            extendedKeyUsage = codeSigning
+
+      - name: Private key and CSR
+        run: openssl req -new -newkey rsa:2048 -nodes -keyout github-ci.key -out github-ci.csr -config cert_config.cnf
+
+      - name: Certificate
+        run: openssl x509 -req -in github-ci.csr -signkey github-ci.key -out github-ci.crt -days 3650 -extensions req_ext -extfile cert_config.cnf
+      
+      - name: Import private key
+        run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.crt
+      
+      - name: Import certificate
+        run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.key
+      
+      - name: Compile
+        run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
+      
+      - name: Sign
+        run: codesign -s "Github CI" foo
