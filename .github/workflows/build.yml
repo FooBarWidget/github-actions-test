@@ -30,6 +30,7 @@ jobs:
       - name: Certificate
         run: openssl x509 -req -in github-ci.csr -signkey github-ci.key -out github-ci.crt -days 3650 -extensions req_ext -extfile cert_config.cnf
       
+      - run: pwd
       - run: sudo security authorizationdb write com.apple.trust-settings.admin allow
 
       - run: security create-keychain -p mypassword mykeychain.keychain
