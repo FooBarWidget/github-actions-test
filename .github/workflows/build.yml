@@ -43,7 +43,8 @@ jobs:
         run: security import github-ci.key -k mykeychain.keychain -T /usr/bin/codesign
 
       - name: Import cert
-        run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
+        #run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
+        run: security import github-ci.crt -k mykeychain.keychain -T /usr/bin/codesign
       
       - run: security find-certificate -a -c "Github CI" -p mykeychain.keychain
       
