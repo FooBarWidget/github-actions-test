@@ -31,7 +31,7 @@ jobs:
         run: openssl x509 -req -in github-ci.csr -signkey github-ci.key -out github-ci.crt -days 3650 -extensions req_ext -extfile cert_config.cnf
       
       - name: P12
-        run: openssl pkcs12 -export -out github-ci.p12 -inkey github-ci.key -in github-ci.crt -name "Github CI"
+        run: openssl pkcs12 -export -out github-ci.p12 -inkey github-ci.key -in github-ci.crt -name "Github CI" -password "pass:"
       
       - name: Import
         run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.p12
