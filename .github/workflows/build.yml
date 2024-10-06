@@ -37,10 +37,11 @@ jobs:
         run: security import github-ci.key -k ~/Library/Keychains/login.keychain-db -T /usr/bin/codesign
 
       - name: Import cert
-        run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.crt
+        run: security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.crt
       
       - name: Compile
         run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
       
+      - run: sudo security authorizationdb write com.apple.trust-settings.admin allow
       - name: Sign
         run: codesign -s "Github CI" --keychain ~/Library/Keychains/login.keychain-db foo
