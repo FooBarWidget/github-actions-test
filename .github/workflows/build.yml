@@ -24,7 +24,8 @@ jobs:
             keyUsage = critical, digitalSignature, keyEncipherment
             extendedKeyUsage = codeSigning
 
-
+      - run: which openssl
+      
       - name: Private key and CSR
         run: openssl req -new -newkey rsa:2048 -nodes -keyout github-ci.key -out github-ci.csr -config cert_config.cnf
 
