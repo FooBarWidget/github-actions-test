@@ -43,4 +43,4 @@ jobs:
         run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
       
       - name: Sign
-        run: codesign -s "Github CI" foo
+        run: codesign -s "Github CI" --keychain ~/Library/Keychains/login.keychain-db foo
