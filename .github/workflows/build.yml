@@ -39,6 +39,8 @@ jobs:
       - run: security import github-ci.key -k mykeychain.keychain -A
       - run: 'security set-key-partition-list -S apple-tool:,apple: -k mypassword mykeychain.keychain'
       - run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
+      - run: security list-keychain -d user -s mykeychain.keychain
+      - run: security find-certificate -a -c "Github CI" mykeychain.keychain
       
       - name: Compile
         run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
