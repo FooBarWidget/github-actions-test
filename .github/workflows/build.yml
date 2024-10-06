@@ -30,13 +30,16 @@ jobs:
       - name: Certificate
         run: openssl x509 -req -in github-ci.csr -signkey github-ci.key -out github-ci.crt -days 3650 -extensions req_ext -extfile cert_config.cnf
       
+      - run: sudo security authorizationdb write com.apple.trust-settings.admin allow
+
       - run: security create-keychain -p mypassword mykeychain.keychain
       - run: security set-keychain-settings -lut 21600 mykeychain.keychain
       - run: security unlock-keychain -p mypassword mykeychain.keychain
       
       - run: security import github-ci.key -k mykeychain.keychain -A
       - run: 'security set-key-partition-list -S apple-tool:,apple: -k mypassword mykeychain.keychain'
-      - run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
+      # - run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
+      - run: security import github-ci.crt -k mykeychain.keychain
       
       - name: Compile
         run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
