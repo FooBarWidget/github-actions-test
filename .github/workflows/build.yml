@@ -9,7 +9,7 @@ jobs:
     steps:
       - run: echo "$CONFIG" > cert_config.cnf
         env:
-          config: |
+          CONFIG: |
             [ req ]
             default_bits = 2048
             prompt = no
@@ -23,9 +23,6 @@ jobs:
             [ req_ext ]
             keyUsage = critical, digitalSignature, keyEncipherment
             extendedKeyUsage = codeSigning
-
-      - run: which openssl
-      - run: cat cert_config.cnf
 
       - name: Private key and CSR
         run: openssl req -new -newkey rsa:2048 -nodes -keyout github-ci.key -out github-ci.csr -config cert_config.cnf
