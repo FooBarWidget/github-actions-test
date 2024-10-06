@@ -33,8 +33,11 @@ jobs:
       - name: P12
         run: openssl pkcs12 -export -out github-ci.p12 -inkey github-ci.key -in github-ci.crt -name "Github CI" -password "pass:"
       
-      - name: Import
-        run: sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-db github-ci.p12
+      - name: Import key
+        run: security import github-ci.key -k ~/Library/Keychains/login.keychain-db -T /usr/bin/codesign
+
+      - name: Import cert
+        run: sudo security add-trusted-cert github-ci.crt -d -r trustRoot -k ~/Library/Keychains/login.keychain-db
       
       - name: Compile
         run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
