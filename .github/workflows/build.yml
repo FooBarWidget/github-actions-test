@@ -37,7 +37,7 @@ jobs:
       - run: security unlock-keychain -p mypassword mykeychain.keychain
       
       - run: security import github-ci.key -k mykeychain.keychain -A
-      # - run: 'security set-key-partition-list -S apple-tool:,apple: -k mypassword mykeychain.keychain'
+      - run: 'security set-key-partition-list -S apple-tool:,apple: -k mypassword mykeychain.keychain'
       - run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
       
       - name: Compile
