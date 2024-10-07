@@ -7,11 +7,8 @@ jobs:
   test:
     runs-on: macos-14
     steps:
-      - run: sudo sh -c "$SCRIPT"
-        env:
-          SCRIPT: |
-            exec 2>&1  
-            set -x
-            mkdir /tmp/foo
-            touch /tmp/foo/foo.c
-            cc -c /tmp/foo/foo.c
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      - run: sudo env PATH="$PATH" ruby -v
+      - run: sudo -E ruby -v
