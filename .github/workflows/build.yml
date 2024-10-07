@@ -10,5 +10,12 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
-      - run: sudo env PATH="$PATH" ruby -v
-      - run: sudo -E ruby -v
+      - run: sudo ruby -e "$SCRIPT"
+        env:
+          SCRIPT: |
+            File.open("/tmp/foo.c", "w").close
+            output = `cc '/tmp/foo.c' -c -o '/tmp/foo.o' 2>&1`
+            p $?
+            puts "----"
+            puts output
+            puts "----"
