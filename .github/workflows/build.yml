@@ -5,8 +5,8 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - run: echo $TMPDIR
-      - run: sudo sh -c 'echo $TMPDIR'
+      - run: sudo sh -c 'echo hi > /tmp/test.txt && cat /tmp/test.txt'
       - run: sudo -E sh -c 'echo hi > $TMPDIR/test.txt && cat $TMPDIR/test.txt'
