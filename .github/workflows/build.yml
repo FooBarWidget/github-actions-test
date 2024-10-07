@@ -14,7 +14,7 @@ jobs:
         env:
           SCRIPT: |
             File.open("/tmp/foo.c", "w").close
-            output = `cc '/tmp/foo.c' -c -o '/tmp/foo.o' 2>&1`
+            output = `cc -v '/tmp/foo.cc' -c -o '/tmp/foo.o' 2>&1`
             p $?
             puts "----"
             puts output
