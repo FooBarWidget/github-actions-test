@@ -9,5 +9,4 @@ jobs:
     steps:
       - run: echo $TMPDIR
       - run: sudo sh -c 'echo $TMPDIR'
-      - run: sudo sh -c 'echo hi > $TMPDIR/test.txt && cat $TMPDIR/test.txt'
       - run: sudo -E sh -c 'echo hi > $TMPDIR/test.txt && cat $TMPDIR/test.txt'
