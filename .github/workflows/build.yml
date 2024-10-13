@@ -5,11 +5,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-24.04
+    runs-on: macos-13
     steps:
-      - run: mkdir -p foo/bar
-      - run: touch foo/bar/baz.txt
-      - uses: actions/upload-artifact@v4
-        with:
-          name: artifact
-          path: foo/bar/**/*
+      - run: timeout 1 sleep 3
+      - run: which timeout
