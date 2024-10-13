@@ -5,46 +5,12 @@ on:
 
 jobs:
   test:
-    runs-on: macos-14
+    runs-on: ubuntu-24.04
     steps:
-      - run: echo "$CONFIG" > cert_config.cnf
-        env:
-          CONFIG: |
-            [ req ]
-            default_bits = 2048
-            prompt = no
-            default_md = sha256
-            distinguished_name = req_distinguished_name
-            req_extensions = req_ext
-
-            [ req_distinguished_name ]
-            CN = Github CI
-
-            [ req_ext ]
-            keyUsage = critical, digitalSignature, keyEncipherment
-            extendedKeyUsage = codeSigning
-
-      - name: Private key and CSR
-        run: openssl req -new -newkey rsa:2048 -nodes -keyout github-ci.key -out github-ci.csr -config cert_config.cnf
-
-      - name: Certificate
-        run: openssl x509 -req -in github-ci.csr -signkey github-ci.key -out github-ci.crt -days 3650 -extensions req_ext -extfile cert_config.cnf
-      
-      - run: pwd
-      - run: sudo security authorizationdb write com.apple.trust-settings.admin allow
-
-      - run: security create-keychain -p mypassword mykeychain.keychain
-      - run: security set-keychain-settings -lut 21600 mykeychain.keychain
-      - run: security unlock-keychain -p mypassword mykeychain.keychain
-      
-      - run: security import github-ci.key -k mykeychain.keychain -A
-      - run: 'security set-key-partition-list -S apple-tool:,apple: -k mypassword mykeychain.keychain'
-      - run: security add-trusted-cert -d -r trustRoot -k mykeychain.keychain github-ci.crt
-      - run: security list-keychain -d user -s mykeychain.keychain
-      
-      - name: Compile
-        run: echo 'int main() { return 0; }' > foo.c && cc foo.c -o foo
-      
-      - name: Sign
-        run: codesign -s "Github CI" --keychain mykeychain.keychain foo
-      - run: codesign --verify foo
+      - run: mkdir foo/bar
+      - run: touch foo/bar/baz.txt
+      - uses: actions/upload-artifact@v4
+        working-directory: foo
+        with:
+          name: artifact
+          path: bar/**/*
