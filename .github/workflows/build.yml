@@ -7,7 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
-      - run: mkdir foo/bar
+      - run: mkdir -p foo/bar
       - run: touch foo/bar/baz.txt
       - uses: actions/upload-artifact@v4
         with:
