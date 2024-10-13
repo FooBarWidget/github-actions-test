@@ -10,7 +10,6 @@ jobs:
       - run: mkdir foo/bar
       - run: touch foo/bar/baz.txt
       - uses: actions/upload-artifact@v4
-        working-directory: foo
         with:
           name: artifact
-          path: bar/**/*
+          path: foo/bar/**/*
