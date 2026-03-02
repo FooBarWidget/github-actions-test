@@ -2,11 +2,14 @@ name: 'CI: build'
 
 on:
   push: {}
+  pull_request: {}
 
 jobs:
   test:
     runs-on: macos-14
     steps:
+      - name: Debug github.event
+        run: echo '${{ toJson(github.event) }}'
       - name: Setup macOS code signing
         run: |
           exec 2>&1
