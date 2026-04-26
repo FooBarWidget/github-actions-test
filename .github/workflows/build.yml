@@ -1,11 +1,6 @@
 name: 'CI: build'
 
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
   workflow_dispatch: {}
   push:
     branches:
@@ -15,9 +10,21 @@ permissions:
   contents: read
 
 jobs:
-  foo:
+  analyze:
+    if: false
     runs-on: ubuntu-24.04
-    # push for internal branches; PR only for forks
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+          - language: rust
     steps:
       - run: echo hello world
+
+  codeql-final-verdict:
+    name: Final verdict
+    runs-on: ubuntu-latest
+    needs: analyze
+    steps:
+      - run: 'true'
