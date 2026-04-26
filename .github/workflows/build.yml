@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   analyze:
-    if: false
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -20,7 +19,7 @@ jobs:
           - language: actions
           - language: rust
     steps:
-      - run: echo hello world
+      - run: 'false'
 
   codeql-final-verdict:
     name: Final verdict
