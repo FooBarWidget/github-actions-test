@@ -13,4 +13,5 @@ jobs:
   test:
     runs-on: ubuntu-slim
     steps:
+      - run: apt update && apt install -y ansible
       - run: ansible --version
