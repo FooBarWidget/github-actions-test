@@ -10,20 +10,6 @@ permissions:
   contents: read
 
 jobs:
-  analyze:
-    runs-on: ubuntu-24.04
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - language: actions
-          - language: rust
+  test:
     steps:
-      - run: 'false'
-
-  codeql-final-verdict:
-    name: Final verdict
-    runs-on: ubuntu-latest
-    needs: analyze
-    steps:
-      - run: 'true'
+      - run: ansible --version
