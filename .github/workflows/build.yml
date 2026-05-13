@@ -11,5 +11,6 @@ permissions:
 
 jobs:
   test:
+    runs-on: ubuntu-slim
     steps:
       - run: ansible --version
